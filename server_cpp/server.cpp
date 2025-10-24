@@ -9,79 +9,108 @@
 #include <grpcpp/grpcpp.h>
 #include "proto/file_processor.grpc.pb.h"
 
+using namespace std;
 using grpc::Server;
 using grpc::ServerBuilder;
 using grpc::ServerContext;
 using grpc::Status;
 using grpc::ServerReaderWriter;
 using file_processor::FileProcessorService;
-using file_processor::FileRequest;
-using file_processor::FileResponse;
 using file_processor::FileChunk;
 
-// class FileProcessorServiceImpl final : public FileProcessorService::Service {
-//     public:
-//         Status CompressPDF(ServerContext* context, const FileRequest* request, FileResponse* response) override {
-//             std::string input_file_path = "/tmp/input_" + request->file_name(); //Arquivo temporário
-//             std::string output_file_path = "/tmp/output_" + request->file_name();
-//             std::ofstream input_file_stream(input_file_path, std::ios::binary);
-//             if (!input_file_stream) {
-//                 LogError("CompressPDF", request->file_name(), "Falha ao criar arquivo temporário de entrada.");
-//                 response->set_success(false);
-//                 response->set_status_message("Erro no servidor ao criar arquivo temporário.");
-//                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
-//             }
-//             // Receber stream do cliente e salvar no arquivo temporário
-//             grpc::ServerReaderWriter<FileChunk, FileChunk>* stream = grpc::ServerContext::FromServerContext(*context).ReaderWriter();
-//             FileChunk chunk;
-//             while (stream->Read(&chunk)) {
-//                 input_file_stream.write(chunk.content().c_str(),
-//                 chunk.content().size());
-//             }
-//             input_file_stream.close();
-
-//             // Executar comando gs
-//             std::string command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=" + output_file_path 
-//             + " " + input_file_path;
-//             int gs_result = std::system(command.c_str());
+class FileProcessorServiceImpl final : public FileProcessorService::Service {
+    public:
+        using fileStreamer = ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk >;
+        
+        grpc::Status CompressPDF(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* stream) {
+            std::string temp_filename;
+            try {
+                temp_filename = writeToTempFile(stream);
+            } catch (const runtime_error& e) {
+                //response->set_success(false);
+                //response->set_status_message("Erro no servidor ao criar arquivo temporário.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
+            }
+            // // Executar comando gs
+            // std::string command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=" + output_file_path 
+            // + " " + input_file_path;
+            // int gs_result = std::system(command.c_str());
             
-//             if (gs_result == 0) {
-//                 LogError("CompressPDF", request->file_name(), "Compressão PDF bem-sucedida.");
-//                 response->set_success(true);
-//                 response->set_file_name("compressed_" + request->file_name());
-//                 std::ifstream output_file_stream(output_file_path, std::ios::binary);
+            // if (gs_result == 0) {
+            //     LogError("CompressPDF", request->file_name(), "Compressão PDF bem-sucedida.");
+            //     response->set_success(true);
+            //     response->set_file_name("compressed_" + request->file_name());
+            //     std::ifstream output_file_stream(output_file_path, std::ios::binary);
+            try {
+                writeToStream(stream, temp_filename);
+            } catch (const runtime_error& e) {
+                //LogError("CompressPDF", request->file_name(), "Falha ao abrir arquivo comprimido para envio.");
+                //response->set_success(false);
+                //response->set_status_message("Erro no servidor ao criar arquivo temporário.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
+            }
             
-//             if (output_file_stream) {
-//                 while (output_file_stream.peek() != EOF) {
-//                     FileChunk response_chunk;
-//                     char buffer[1024];
-//                     output_file_stream.read(buffer, sizeof(buffer));
-//                     response_chunk.set_content(buffer, output_file_stream.gcount());
-//                     stream->Write(response_chunk); // Enviar stream para o cliente
+            // stream->WritesDone();
+            // stream->Finish();
+            // } else {
+            //     LogError("CompressPDF", request->file_name(), "Falha na compressão PDF. Código de retorno: " + std::to_string(gs_result));
+            //     response->set_success(false);
+            //     response->set_status_message("Falha ao comprimir PDF.");
+            //     return Status::INTERNAL;
+            // }
+            // std::remove(input_file_path.c_str()); // Limpar arquivos temporários
+            // std::remove(output_file_path.c_str());
 
-//                 }
-//                 output_file_stream.close();
-//             } else {
-//                 LogError("CompressPDF", request->file_name(), "Falha ao abrir arquivo comprimido para envio.");
-//                 response->set_success(false);
-//                 response->set_status_message("Erro no servidor ao abrir arquivo comprimido.");
-//                 return Status::INTERNAL;
-//             }
-//             stream->WritesDone();
-//             stream->Finish();
-//             } else {
-//                 LogError("CompressPDF", request->file_name(), "Falha na compressão PDF. Código de retorno: " + std::to_string(gs_result));
-//                 response->set_success(false);
-//                 response->set_status_message("Falha ao comprimir PDF.");
-//                 return Status::INTERNAL;
-//             }
-//             std::remove(input_file_path.c_str()); // Limpar arquivos temporários
-//             std::remove(output_file_path.c_str());
+            return Status::OK;
+        }
+    private:
+        string writeToTempFile(fileStreamer* stream) {
+            FileChunk chunk;
+            stream->Read(&chunk);
+            string filename = chunk.filename();
+            string input_file_path = filename;
+            cout << "Criando arquivo temporário de entrada: " << input_file_path << endl;
+            ofstream input_file_stream(input_file_path, ios::binary);
+            if (!input_file_stream) {
+                //LogError("CompressPDF", filename, "Falha ao criar arquivo temporário de entrada.");
+                cout << "Erro ao criar arquivo temporário de entrada." << endl;
+                throw runtime_error("Erro ao criar arquivo temporário de entrada.");
+            }
+            while (stream->Read(&chunk)) {
+                input_file_stream.write(chunk.content().c_str(), chunk.content().size());
+            }
+            input_file_stream.close();
+            return filename;
+        }
 
-//             return Status::OK;
-//         }
-
-//     private:
+        void writeToStream(fileStreamer* stream, const string result_filename) {
+            ifstream file_to_stream(result_filename, ios::binary);
+            if (file_to_stream) {
+                
+                FileChunk chunk;
+                chunk.set_filename(result_filename);
+                chunk.set_success(true);
+                chunk.set_is_last_chunk(false);
+                chunk.set_content("");
+                stream->Write(chunk); // Enviar metadados iniciais
+                
+                while (true) {
+                    char buffer[1024];
+                    file_to_stream.read(buffer, sizeof(buffer));
+                    chunk.set_content(buffer, file_to_stream.gcount());
+                    if (file_to_stream.peek() == EOF) {
+                        chunk.set_is_last_chunk(true);
+                    }
+                    stream->Write(chunk); // Enviar stream para o cliente
+                    if (file_to_stream.peek() == EOF) {
+                       break;
+                    }
+                }
+                file_to_stream.close();
+            } else {
+                throw runtime_error("Erro ao abrir arquivo para streaming.");
+            }
+        }
 //         void LogError(const std::string& service_name, const std::string& file_name, const std::string& message) {
 //             auto now = std::chrono::system_clock::now();
 //             std::time_t now_c = std::chrono::system_clock::to_time_t(now);
@@ -124,20 +153,20 @@ using file_processor::FileChunk;
 //             std::cout << "[" << timestamp << "] SUCCESS - Service: " << service_name
 //             << ", File: " << file_name << ", Message: " << message << std::endl; // Log para console também
 //         }
-// };
+};
 
-// void RunServer() {
-//     std::string server_address("0.0.0.0:50051");
-//     FileProcessorServiceImpl service;
-//     ServerBuilder builder;
-//     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-//     builder.RegisterService(&service);
-//     std::unique_ptr<Server> server(builder.BuildAndStart());
-//     std::cout << "Servidor gRPC ouvindo em " << server_address << std::endl;
-//     server->Wait();
-// }
+void RunServer() {
+    string server_address("0.0.0.0:50051");
+    FileProcessorServiceImpl service;
+    ServerBuilder builder;
+    builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+    builder.RegisterService(&service);
+    unique_ptr<Server> server(builder.BuildAndStart());
+    cout << "Servidor gRPC ouvindo em " << server_address << endl;
+    server->Wait();
+}
 
 int main() {
-    // RunServer();
+    RunServer();
     return 0;
 }
