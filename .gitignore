@@ -1,0 +1,112 @@
+# .gitignore for a gRPC project:
+# - Python client
+# - C++ server
+
+# ===== Python =====
+# Bytecode, caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+/.venv/
+my-env/
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / coverage
+.pytest_cache/
+coverage/
+htmlcov/
+.nox/
+.tox/
+.cache/
+.mypy_cache/
+.pyre/
+
+# IPython / Jupyter
+.ipynb_checkpoints
+
+# Common python files
+pip-log.txt
+pip-delete-this-directory.txt
+python-eggs/
+
+# Optional: ignore generated Python gRPC/protobuf stubs
+# Uncomment if you do not commit generated stubs
+# *_pb2.py
+# *_pb2_grpc.py
+
+# ===== C / C++ =====
+# Build directories
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Object files, libraries, binaries
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.so
+*.a
+*.lib
+*.dll
+*.exe
+*.out
+*.elf
+*.map
+*.dSYM/
+
+# Coverage / profiler outputs
+*.gcda
+*.gcno
+*.prof
+
+# Generated protobuf/grpc C++ files (often in build/gen or generated/)
+# Ignore if generated during build (uncomment if appropriate)
+# *.pb.cc
+# *.pb.h
+# *.grpc.pb.cc
+# *.grpc.pb.h
+# generated/
+# proto-gen/
+
+# ===== IDEs / Editors =====
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.gitattributes.user
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs, temporary files =====
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+
+# ===== Secrets / keys =====
+*.pem
+*.key
+.env
+.env.* 
+secrets.*

@@ -24,6 +24,7 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
         
         grpc::Status CompressPDF(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* stream) {
             std::string temp_filename;
+            std::string output_file_path;
             try {
                 temp_filename = writeToTempFile(stream);
             } catch (const runtime_error& e) {
@@ -31,18 +32,21 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
                 //response->set_status_message("Erro no servidor ao criar arquivo temporário.");
                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
             }
-            // // Executar comando gs
-            // std::string command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=" + output_file_path 
-            // + " " + input_file_path;
-            // int gs_result = std::system(command.c_str());
+            output_file_path = "compressed_" + temp_filename;
+            std::string command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile="
+            + output_file_path 
+            + " " + temp_filename;
             
-            // if (gs_result == 0) {
-            //     LogError("CompressPDF", request->file_name(), "Compressão PDF bem-sucedida.");
-            //     response->set_success(true);
-            //     response->set_file_name("compressed_" + request->file_name());
-            //     std::ifstream output_file_stream(output_file_path, std::ios::binary);
+            int gs_result = system(command.c_str());
+            
+            if (gs_result == 0) {
+                //LogError("CompressPDF", request->file_name(), "Compressão PDF bem-sucedida.");
+                //response->set_success(true);
+                //response->set_file_name("compressed_" + request->file_name());
+                cout << "Compressão PDF bem-sucedida." << endl;
+            }
             try {
-                writeToStream(stream, temp_filename);
+                writeToStream(stream, output_file_path);
             } catch (const runtime_error& e) {
                 //LogError("CompressPDF", request->file_name(), "Falha ao abrir arquivo comprimido para envio.");
                 //response->set_success(false);
@@ -50,17 +54,14 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
             }
             
-            // stream->WritesDone();
-            // stream->Finish();
             // } else {
             //     LogError("CompressPDF", request->file_name(), "Falha na compressão PDF. Código de retorno: " + std::to_string(gs_result));
             //     response->set_success(false);
             //     response->set_status_message("Falha ao comprimir PDF.");
             //     return Status::INTERNAL;
             // }
-            // std::remove(input_file_path.c_str()); // Limpar arquivos temporários
-            // std::remove(output_file_path.c_str());
-
+            remove(temp_filename.c_str());
+            remove(output_file_path.c_str());
             return Status::OK;
         }
     private:

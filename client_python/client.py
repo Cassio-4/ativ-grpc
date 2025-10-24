@@ -36,7 +36,6 @@ def compress_pdf(stub, input_file_path):
     response_stream = stub.CompressPDF(file_iterator())
     try:
         received_file_name = next(response_stream).filename
-        received_file_name = f"from_server_{received_file_name}"
         with open(received_file_name, 'wb') as output_file:
             for chunk in response_stream:
                 output_file.write(chunk.content)
