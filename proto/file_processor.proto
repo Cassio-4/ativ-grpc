@@ -14,9 +14,17 @@ message ResizeImageRequest {
     int32 height = 2;
 }
 
+message ImageStreamRequest {
+    oneof request_type {
+        string format = 1;
+        ResizeImageRequest metadata = 2;
+        FileChunk chunk = 3;
+    }
+}
+
 service FileProcessorService {
     rpc CompressPDF(stream FileChunk) returns (stream FileChunk);
     rpc ConvertToTXT(stream FileChunk) returns (stream FileChunk);
-    rpc ConvertImageFormat(stream FileChunk) returns (stream FileChunk);
-    rpc ResizeImage(stream FileChunk) returns (stream FileChunk);
+    rpc ConvertImageFormat(stream ImageStreamRequest) returns (stream FileChunk);
+    rpc ResizeImage(stream ImageStreamRequest) returns (stream FileChunk);
 }
