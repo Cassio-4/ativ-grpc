@@ -36,113 +36,113 @@ class FileProcessorService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> CompressPDF(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(CompressPDFRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>> CompressPDF(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>>(CompressPDFRaw(context));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncCompressPDFRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>> AsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>>(AsyncCompressPDFRaw(context, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncCompressPDFRaw(context, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>> PrepareAsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>>(PrepareAsyncCompressPDFRaw(context, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> ConvertToTXT(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(ConvertToTXTRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>> ConvertToTXT(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>>(ConvertToTXTRaw(context));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncConvertToTXTRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>> AsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>>(AsyncConvertToTXTRaw(context, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncConvertToTXTRaw(context, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>> PrepareAsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>>(PrepareAsyncConvertToTXTRaw(context, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> ConvertImageFormat(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(ConvertImageFormatRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> ConvertImageFormat(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(ConvertImageFormatRaw(context));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncConvertImageFormatRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> AsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(AsyncConvertImageFormatRaw(context, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncConvertImageFormatRaw(context, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> PrepareAsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(PrepareAsyncConvertImageFormatRaw(context, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> ResizeImage(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(ResizeImageRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> ResizeImage(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(ResizeImageRaw(context));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncResizeImageRaw(context, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> AsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(AsyncResizeImageRaw(context, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncResizeImageRaw(context, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> PrepareAsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(PrepareAsyncResizeImageRaw(context, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
-      virtual void CompressPDF(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) = 0;
-      virtual void ConvertToTXT(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) = 0;
-      virtual void ConvertImageFormat(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) = 0;
-      virtual void ResizeImage(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) = 0;
+      virtual void CompressPDF(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileChunk,::file_processor::FileChunk>* reactor) = 0;
+      virtual void ConvertToTXT(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileChunk,::file_processor::FileChunk>* reactor) = 0;
+      virtual void ConvertImageFormat(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::ImageStreamRequest,::file_processor::FileChunk>* reactor) = 0;
+      virtual void ResizeImage(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::ImageStreamRequest,::file_processor::FileChunk>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
    private:
-    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* CompressPDFRaw(::grpc::ClientContext* context) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* ConvertToTXTRaw(::grpc::ClientContext* context) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* ConvertImageFormatRaw(::grpc::ClientContext* context) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* ResizeImageRaw(::grpc::ClientContext* context) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>* CompressPDFRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>* AsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>* PrepareAsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>* ConvertToTXTRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>* AsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::FileChunk, ::file_processor::FileChunk>* PrepareAsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* ConvertImageFormatRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* AsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* PrepareAsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* ResizeImageRaw(::grpc::ClientContext* context) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* AsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderWriterInterface< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* PrepareAsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> CompressPDF(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(CompressPDFRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>> CompressPDF(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>>(CompressPDFRaw(context));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncCompressPDFRaw(context, cq, tag));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>> AsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>>(AsyncCompressPDFRaw(context, cq, tag));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncCompressPDFRaw(context, cq));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>> PrepareAsyncCompressPDF(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>>(PrepareAsyncCompressPDFRaw(context, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> ConvertToTXT(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(ConvertToTXTRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>> ConvertToTXT(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>>(ConvertToTXTRaw(context));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncConvertToTXTRaw(context, cq, tag));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>> AsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>>(AsyncConvertToTXTRaw(context, cq, tag));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncConvertToTXTRaw(context, cq));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>> PrepareAsyncConvertToTXT(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>>(PrepareAsyncConvertToTXTRaw(context, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> ConvertImageFormat(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(ConvertImageFormatRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> ConvertImageFormat(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(ConvertImageFormatRaw(context));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncConvertImageFormatRaw(context, cq, tag));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> AsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(AsyncConvertImageFormatRaw(context, cq, tag));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncConvertImageFormatRaw(context, cq));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> PrepareAsyncConvertImageFormat(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(PrepareAsyncConvertImageFormatRaw(context, cq));
     }
-    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> ResizeImage(::grpc::ClientContext* context) {
-      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(ResizeImageRaw(context));
+    std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> ResizeImage(::grpc::ClientContext* context) {
+      return std::unique_ptr< ::grpc::ClientReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(ResizeImageRaw(context));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> AsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(AsyncResizeImageRaw(context, cq, tag));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> AsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(AsyncResizeImageRaw(context, cq, tag));
     }
-    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>> PrepareAsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>>(PrepareAsyncResizeImageRaw(context, cq));
+    std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>> PrepareAsyncResizeImage(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>>(PrepareAsyncResizeImageRaw(context, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void CompressPDF(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) override;
-      void ConvertToTXT(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) override;
-      void ConvertImageFormat(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) override;
-      void ResizeImage(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileRequest,::file_processor::FileResponse>* reactor) override;
+      void CompressPDF(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileChunk,::file_processor::FileChunk>* reactor) override;
+      void ConvertToTXT(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::FileChunk,::file_processor::FileChunk>* reactor) override;
+      void ConvertImageFormat(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::ImageStreamRequest,::file_processor::FileChunk>* reactor) override;
+      void ResizeImage(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::file_processor::ImageStreamRequest,::file_processor::FileChunk>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -154,18 +154,18 @@ class FileProcessorService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* CompressPDFRaw(::grpc::ClientContext* context) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* ConvertToTXTRaw(::grpc::ClientContext* context) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* ConvertImageFormatRaw(::grpc::ClientContext* context) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* ResizeImageRaw(::grpc::ClientContext* context) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* AsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileRequest, ::file_processor::FileResponse>* PrepareAsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* CompressPDFRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* AsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* PrepareAsyncCompressPDFRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* ConvertToTXTRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* AsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* PrepareAsyncConvertToTXTRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* ConvertImageFormatRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* AsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* PrepareAsyncConvertImageFormatRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* ResizeImageRaw(::grpc::ClientContext* context) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* AsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReaderWriter< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* PrepareAsyncResizeImageRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_CompressPDF_;
     const ::grpc::internal::RpcMethod rpcmethod_ConvertToTXT_;
     const ::grpc::internal::RpcMethod rpcmethod_ConvertImageFormat_;
@@ -177,10 +177,10 @@ class FileProcessorService final {
    public:
     Service();
     virtual ~Service();
-    virtual ::grpc::Status CompressPDF(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream);
-    virtual ::grpc::Status ConvertToTXT(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream);
-    virtual ::grpc::Status ConvertImageFormat(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream);
-    virtual ::grpc::Status ResizeImage(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream);
+    virtual ::grpc::Status CompressPDF(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* stream);
+    virtual ::grpc::Status ConvertToTXT(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* stream);
+    virtual ::grpc::Status ConvertImageFormat(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* stream);
+    virtual ::grpc::Status ResizeImage(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* stream);
   };
   template <class BaseClass>
   class WithAsyncMethod_CompressPDF : public BaseClass {
@@ -194,11 +194,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestCompressPDF(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestCompressPDF(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(0, context, stream, new_call_cq, notification_cq, tag);
     }
   };
@@ -214,11 +214,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestConvertToTXT(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestConvertToTXT(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(1, context, stream, new_call_cq, notification_cq, tag);
     }
   };
@@ -234,11 +234,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestConvertImageFormat(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestConvertImageFormat(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(2, context, stream, new_call_cq, notification_cq, tag);
     }
   };
@@ -254,11 +254,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestResizeImage(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestResizeImage(::grpc::ServerContext* context, ::grpc::ServerAsyncReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* stream, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncBidiStreaming(3, context, stream, new_call_cq, notification_cq, tag);
     }
   };
@@ -270,7 +270,7 @@ class FileProcessorService final {
    public:
     WithCallbackMethod_CompressPDF() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackBidiHandler< ::file_processor::FileRequest, ::file_processor::FileResponse>(
+          new ::grpc::internal::CallbackBidiHandler< ::file_processor::FileChunk, ::file_processor::FileChunk>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->CompressPDF(context); }));
     }
@@ -278,11 +278,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::file_processor::FileRequest, ::file_processor::FileResponse>* CompressPDF(
+    virtual ::grpc::ServerBidiReactor< ::file_processor::FileChunk, ::file_processor::FileChunk>* CompressPDF(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -293,7 +293,7 @@ class FileProcessorService final {
    public:
     WithCallbackMethod_ConvertToTXT() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackBidiHandler< ::file_processor::FileRequest, ::file_processor::FileResponse>(
+          new ::grpc::internal::CallbackBidiHandler< ::file_processor::FileChunk, ::file_processor::FileChunk>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->ConvertToTXT(context); }));
     }
@@ -301,11 +301,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::file_processor::FileRequest, ::file_processor::FileResponse>* ConvertToTXT(
+    virtual ::grpc::ServerBidiReactor< ::file_processor::FileChunk, ::file_processor::FileChunk>* ConvertToTXT(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -316,7 +316,7 @@ class FileProcessorService final {
    public:
     WithCallbackMethod_ConvertImageFormat() {
       ::grpc::Service::MarkMethodCallback(2,
-          new ::grpc::internal::CallbackBidiHandler< ::file_processor::FileRequest, ::file_processor::FileResponse>(
+          new ::grpc::internal::CallbackBidiHandler< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->ConvertImageFormat(context); }));
     }
@@ -324,11 +324,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::file_processor::FileRequest, ::file_processor::FileResponse>* ConvertImageFormat(
+    virtual ::grpc::ServerBidiReactor< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* ConvertImageFormat(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -339,7 +339,7 @@ class FileProcessorService final {
    public:
     WithCallbackMethod_ResizeImage() {
       ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackBidiHandler< ::file_processor::FileRequest, ::file_processor::FileResponse>(
+          new ::grpc::internal::CallbackBidiHandler< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>(
             [this](
                    ::grpc::CallbackServerContext* context) { return this->ResizeImage(context); }));
     }
@@ -347,11 +347,11 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerBidiReactor< ::file_processor::FileRequest, ::file_processor::FileResponse>* ResizeImage(
+    virtual ::grpc::ServerBidiReactor< ::file_processor::ImageStreamRequest, ::file_processor::FileChunk>* ResizeImage(
       ::grpc::CallbackServerContext* /*context*/)
       { return nullptr; }
   };
@@ -369,7 +369,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -386,7 +386,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -403,7 +403,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -420,7 +420,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -437,7 +437,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -457,7 +457,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -477,7 +477,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -497,7 +497,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -520,7 +520,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status CompressPDF(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -543,7 +543,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertToTXT(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::FileChunk>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -566,7 +566,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ConvertImageFormat(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -589,7 +589,7 @@ class FileProcessorService final {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileResponse, ::file_processor::FileRequest>* /*stream*/)  override {
+    ::grpc::Status ResizeImage(::grpc::ServerContext* /*context*/, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* /*stream*/)  override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
