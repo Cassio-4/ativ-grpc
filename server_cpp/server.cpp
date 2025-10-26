@@ -39,10 +39,14 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
             try {
                 temp_filename = writeToTempFile(stream);
             } catch (const runtime_error& e) {
-                //response->set_success(false);
-                //response->set_status_message("Erro no servidor ao criar arquivo temporário.");
+                logError("CompressPDF", e.what(), "Falha ao criar arquivo temporário de entrada.");
                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
             }
+            if (!isPdf(temp_filename)) {
+                logError("CompressPDF", temp_filename, "Arquivo não é um PDF válido.");
+                return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "Arquivo não é um PDF válido.");
+            }
+
             output_file_path = "compressed_" + temp_filename;
             string command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile="
             + output_file_path 
@@ -50,29 +54,20 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
             
             int gs_result = system(command.c_str());
             
-            if (gs_result == 0) {
-                //LogError("CompressPDF", request->file_name(), "Compressão PDF bem-sucedida.");
-                //response->set_success(true);
-                //response->set_file_name("compressed_" + request->file_name());
-                cout << "Compressão PDF bem-sucedida." << endl;
+            if (gs_result != 0) {
+                logError("CompressPDF", output_file_path, "Falha na compressão PDF.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao comprimir PDF");
             }
             try {
                 writeToStream(stream, output_file_path);
             } catch (const runtime_error& e) {
-                //LogError("CompressPDF", request->file_name(), "Falha ao abrir arquivo comprimido para envio.");
-                //response->set_success(false);
-                //response->set_status_message("Erro no servidor ao criar arquivo temporário.");
-                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
+                logError("CompressPDF", output_file_path, "Falha no envio do arquivo comprimido.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao enviar arq final");
             }
             
-            // } else {
-            //     LogError("CompressPDF", request->file_name(), "Falha na compressão PDF. Código de retorno: " + std::to_string(gs_result));
-            //     response->set_success(false);
-            //     response->set_status_message("Falha ao comprimir PDF.");
-            //     return Status::INTERNAL;
-            // }
             remove(temp_filename.c_str());
             remove(output_file_path.c_str());
+            logSuccess("CompressPDF", output_file_path, "Compressão PDF bem-sucedida.");
             return Status::OK;
         }
 
@@ -82,11 +77,11 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
             try {
                 temp_filename = writeToTempFile(stream);
             } catch (const runtime_error& e) {
-                //TODO LOGGING
+                logError("ConvertToTXT", e.what(), "Falha ao criar arquivo temporário de entrada.");
                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
             }
             if (!isPdf(temp_filename)) {
-                // TODO LOGGING
+                logError("ConvertToTXT", temp_filename, "Arquivo não é um PDF válido.");
                 return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "Arquivo não é um PDF válido.");
             }
             output_file_path = filesystem::path(temp_filename).replace_extension("txt").string();
@@ -96,28 +91,57 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
             
             int gs_result = system(command.c_str());
             
-            if (gs_result == 0) {
-                // TODO LOGGING
-                cout << "Compressão PDF bem-sucedida." << endl;
-            }
-            else {
-                // TODO LOGGING
-                return grpc::Status(grpc::StatusCode::INTERNAL, "Falha ao converter PDF para TXT.");
+            if (gs_result != 0) {
+                logError("ConvertToTXT", output_file_path, "Falha na conversão PDF.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao converter PDF");
             }
             try {
                 writeToStream(stream, output_file_path);
             } catch (const runtime_error& e) {
-                // TODO LOGGING
+                logError("ConvertToTXT", output_file_path, "Falha no envio do arquivo de texto.");
                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao enviar arq final");
             }
             
             remove(temp_filename.c_str());
             remove(output_file_path.c_str());
+            logSuccess("ConvertToTXT", output_file_path, "Conversão PDF -> TXT bem-sucedida.");
             return Status::OK;
         }
 
         grpc::Status ConvertImageFormat(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* stream) {
+            string temp_filename;
+            string output_file_path;
+            ResizeParams params;
+
+            try {
+                params = processImgChunks(stream);
+            } catch (const runtime_error& e) {
+                logError("ConvertImageFormat", e.what(), "Falha ao criar arquivo temporário de entrada.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
+            }
+
+            temp_filename = params.filename;
+            output_file_path = filesystem::path(temp_filename).replace_extension(params.format).string();
+            string command = "convert "+ params.filename + " " + output_file_path;
             
+            int gs_result = system(command.c_str());
+            
+            if (gs_result != 0) {
+                logError("ConvertImageFormat", output_file_path, "Falha na conversão de Imagem.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro na conversão de imagem.");
+            }
+            
+            try {
+                writeImgToStream(stream, output_file_path);
+            } catch (const runtime_error& e) {
+                logError("ConvertImageFormat", output_file_path, "Falha no envio da imagem convertida.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao enviar img final");
+            }
+            
+            remove(temp_filename.c_str());
+            remove(output_file_path.c_str());
+            logSuccess("ConvertImageFormat", output_file_path, "Conversão de imagem bem-sucedida.");
+            return Status::OK;
         }
     
         grpc::Status ResizeImage(::grpc::ServerContext* context, ::grpc::ServerReaderWriter< ::file_processor::FileChunk, ::file_processor::ImageStreamRequest>* stream) {
@@ -127,52 +151,45 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
             try {
                 params = processImgChunks(stream);
             } catch (const runtime_error& e) {
-                //TODO LOGGING
+                logError("ResizeImage", e.what(), "Falha ao criar arquivo temporário de entrada.");
                 return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao criar arq temporario");
             }
-            if (!isPdf(temp_filename)) {
-                // TODO LOGGING
-                return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "Arquivo não é um PDF válido.");
-            }
-            output_file_path = filesystem::path(temp_filename).replace_extension("txt").string();
-            string command = "gs -sDEVICE=txtwrite -dNOPAUSE -dBATCH -dQUIET -sOutputFile="
-            + output_file_path 
-            + " " + temp_filename;
+            
+            output_file_path = "resized_" + params.filename;
+            string command = "convert "+ params.filename+ " -resize " + to_string(params.width)+"x"+
+            to_string(params.height)+" "+ output_file_path;
             
             int gs_result = system(command.c_str());
             
-            if (gs_result == 0) {
-                // TODO LOGGING
-                cout << "Compressão PDF bem-sucedida." << endl;
-            }
-            else {
-                // TODO LOGGING
-                return grpc::Status(grpc::StatusCode::INTERNAL, "Falha ao converter PDF para TXT.");
+            if (gs_result != 0) {
+                logError("ResizeImage", output_file_path, "Falha no redimensionamento de Imagem.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no redimensionamento de imagem.");
             }
             try {
                 writeImgToStream(stream, output_file_path);
             } catch (const runtime_error& e) {
-                // TODO LOGGING
-                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao enviar arq final");
+                logError("ResizeImage", output_file_path, "Falha no envio da imagem redimensionada.");
+                return grpc::Status(grpc::StatusCode::INTERNAL, "Erro no sv ao enviar img final");
             }
             
             remove(temp_filename.c_str());
             remove(output_file_path.c_str());
+            logSuccess("ResizeImage", output_file_path, "Redimensionamento de imagem bem-sucedida.");
             return Status::OK;
         }
 
     private:
         string writeToTempFile(fileStreamer* stream) {
             FileChunk chunk;
+            string input_file_path = "empty";
+            
             stream->Read(&chunk);
             string filename = chunk.filename();
-            string input_file_path = filename;
-            cout << "Criando arquivo temporário de entrada: " << input_file_path << endl;
+            input_file_path = filename;
+          
             ofstream input_file_stream(input_file_path, ios::binary);
             if (!input_file_stream) {
-                //LogError("CompressPDF", filename, "Falha ao criar arquivo temporário de entrada.");
-                cout << "Erro ao criar arquivo temporário de entrada." << endl;
-                throw runtime_error("Erro ao criar arquivo temporário de entrada.");
+                throw runtime_error(input_file_path);
             }
             while (stream->Read(&chunk)) {
                 input_file_stream.write(chunk.content().c_str(), chunk.content().size());
@@ -213,36 +230,35 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
         ResizeParams processImgChunks(imageStreamer* stream) {
             ImageStreamRequest request;
             ResizeParams params;
-            int width = 0;
-            int height = 0;
-            string filename;
+            string input_file_path = "empty";
             
             stream->Read(&request);
+            
             if (request.has_metadata()) {
                 const ResizeImageRequest& metadata = request.metadata();
-                width = metadata.width();
-                height = metadata.height(); 
+                params.width = metadata.width();
+                params.height = metadata.height();
+            } else if(request.has_format()){
+                params.format = request.format();
+            } else {
+                throw runtime_error(input_file_path + " Metadados");
             }
             stream->Read(&request);
             if (request.has_chunk()) {
                 const FileChunk& chunk = request.chunk();
-                filename = chunk.filename(); 
+                params.filename = chunk.filename();
+                input_file_path = params.filename;
             }
-            cout << "Criando arquivo temporário de entrada: " << filename << endl;
-            ofstream input_file_stream(filename, ios::binary);
+
+            ofstream input_file_stream(params.filename, ios::binary);
             if (!input_file_stream) {
-                //LogError("CompressPDF", filename, "Falha ao criar arquivo temporário de entrada.");
-                cout << "Erro ao criar arquivo temporário de entrada." << endl;
-                throw runtime_error("Erro ao criar arquivo temporário de entrada.");
+                throw runtime_error(input_file_path);
             }
             while (stream->Read(&request)) {
                 const FileChunk& chunk = request.chunk();
                 input_file_stream.write(chunk.content().c_str(), chunk.content().size());
             }
             input_file_stream.close();
-            params.width = width;
-            params.height = height;
-            params.filename = filename;
             return params;
         }
 
@@ -285,48 +301,48 @@ class FileProcessorServiceImpl final : public FileProcessorService::Service {
             
             return lower_extension == ".pdf";
         }
-//         void LogError(const std::string& service_name, const std::string& file_name, const std::string& message) {
-//             auto now = std::chrono::system_clock::now();
-//             std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-//             std::tm now_tm;
-//             localtime_r(&now_c, &now_tm);
-//             char timestamp[26];
-//             std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &now_tm);
-//             std::ofstream log_file("server.log", std::ios::app);
-            
-//             if (log_file.is_open()) {
-//                 log_file << "[" << timestamp << "] ERROR - Service: " <<
-//                 service_name << ", File: " << file_name << ", Message: " << message <<
-//                 std::endl;
 
-//                 log_file.close();
-//             } else {
-//                 std::cerr << "Falha ao abrir arquivo de log!" << std::endl;
-//             }
-//             std::cerr << "[" << timestamp << "] ERROR - Service: " << service_name
-//             << ", File: " << file_name << ", Message: " << message << std::endl; // Log para console também
-//         }
+        void logError(const std::string& service_name, const std::string& file_name, const std::string& message) {
+            auto now = std::chrono::system_clock::now();
+            std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+            std::tm now_tm;
+            localtime_r(&now_c, &now_tm);
+            char timestamp[26];
+            std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &now_tm);
+            std::ofstream log_file("server.log", std::ios::app);
+            
+            if (log_file.is_open()) {
+                log_file << "[" << timestamp << "] ERROR - Service: " <<
+                service_name << ", File: " << file_name << ", Message: " << message <<
+                std::endl;
+
+                log_file.close();
+            } else {
+                std::cerr << "Falha ao abrir arquivo de log!" << std::endl;
+            }
+            std::cerr << "[" << timestamp << "] ERROR - Service: " << service_name
+            << ", File: " << file_name << ", Message: " << message << std::endl; // Log para console também
+        }
         
-//         // ... (Função Log para sucesso - LogSuccess, similar a LogError, mas para logs de sucesso)
-//         void LogSuccess(const std::string& service_name, const std::string& file_name, const std::string& message) {
-//             auto now = std::chrono::system_clock::now();
-//             std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-//             std::tm now_tm;
-//             localtime_r(&now_c, &now_tm);
-//             char timestamp[26];
-//             std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &now_tm);
-//             std::ofstream log_file("server.log", std::ios::app);
-//             if (log_file.is_open()) {
-//                 log_file << "[" << timestamp << "] SUCCESS - Service: " <<
-//                 service_name << ", File: " << file_name << ", Message: " << message <<
-//                 std::endl;
-//                 log_file.close();
-//             } else {
-//                 std::cerr << "Falha ao abrir arquivo de log!" << std::endl;
-//             }
-//             std::cout << "[" << timestamp << "] SUCCESS - Service: " << service_name
-//             << ", File: " << file_name << ", Message: " << message << std::endl; // Log para console também
-//         }
+        void logSuccess(const std::string& service_name, const std::string& file_name, const std::string& message) {
+            auto now = std::chrono::system_clock::now();
+            std::time_t now_c = std::chrono::system_clock::to_time_t(now);
+            std::tm now_tm;
+            localtime_r(&now_c, &now_tm);
+            char timestamp[26];
+            std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", &now_tm);
+            std::ofstream log_file("server.log", std::ios::app);
+            if (log_file.is_open()) {
+                log_file << "[" << timestamp << "] SUCCESS - Service: " <<
+                service_name << ", File: " << file_name << ", Message: " << message <<
+                std::endl;
+                log_file.close();
+            } else {
+                std::cerr << "Falha ao abrir arquivo de log!" << std::endl;
+            }
+            std::cout << "[" << timestamp << "] SUCCESS - Service: " << service_name
+            << ", File: " << file_name << ", Message: " << message << std::endl; // Log para console também
+        }
 };
 
 void RunServer() {
